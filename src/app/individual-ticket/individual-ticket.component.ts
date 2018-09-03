@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { TicketsComponent } from '../tickets/tickets.component';
+import { TicketsService } from '../tickets.service';
+import { Ticket } from '../ticket';
 
 @Component({
   selector: 'app-individual-ticket',
@@ -7,9 +11,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndividualTicketComponent implements OnInit {
 
-  constructor() { }
+  TicketById;
+  constructor(private service : TicketsService, private route : ActivatedRoute) { }
 
   ngOnInit() {
+    let id = parseInt(this.route.snapshot.paramMap.get('id'));
+this.call(id)
+
   }
 
+  call(id)
+  {
+    this.service.getById(id).subscribe(data => {
+      this.TicketById = data.json();
+    });
+
+  }
 }
