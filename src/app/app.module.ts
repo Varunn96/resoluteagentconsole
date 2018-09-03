@@ -9,14 +9,13 @@ import { AppComponent } from './app.component';
 import { RoutingComponents } from './app-routing.module';
 import { MaterialModule } from './material';
 import { TicketsService } from './tickets.service';
-import { NewTicketComponent } from './new-ticket/new-ticket.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    RoutingComponents,
-    NewTicketComponent,
+    RoutingComponents
   ],
   imports: [
     BrowserModule,

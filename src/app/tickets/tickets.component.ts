@@ -1,40 +1,73 @@
 import { Component, OnInit } from '@angular/core';
-import { TicketsService } from '../tickets.service';
-import { Ticket } from '../ticket';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { TicketsService } from '../tickets.service';
+import { FormBuilder } from '@angular/forms';
+
+// export interface Sources {
+//   value: number,
+//   source: string
+// }
+// export interface PriorityLevel {
+//   value: number,
+//   priority: string
+// }
 
 @Component({
   selector: 'app-tickets',
   templateUrl: './tickets.component.html',
   styleUrls: ['./tickets.component.css']
 })
+
 export class TicketsComponent implements OnInit {
 
-  displayedColumns: string[] = ['subject', 'source', 'status', 'priority'];
-  allTickets = [];
-  openTickets = [];
-  closedTickets = [];
-  dueTickets = [];
+  navLinks = [];
   numberOfTickets = {};
-  constructor(private service : TicketsService, private router : Router, public dialog: MatDialog) { }
-  TicketId;
+  // filteredTickets;
+
+  // filterForm = this.formbuilder.group({
+  //   sources: [''],
+  //   priorityLevel: [''],
+  // });
+
+
+  // sources: Sources[] = [
+  //   { value : 0, source : 'twitter' },
+  //   { value : 1, source : 'chat' },
+  // ]
+
+  // priorityLevel: PriorityLevel[] = [
+  //   { value : 0, priority : 'high' },
+  //   { value : 1, priority : 'medium' },
+  //   { value : 2, priority : 'low' }
+  // ]
+
+  constructor(private router: Router, private service : TicketsService, private formbuilder : FormBuilder) {
+    this.navLinks = [
+      {
+        label: 'All Tickets',
+        path: '/tickets/all',
+        count: 'total'
+      }, {
+        label: 'Open',
+        path: '/tickets/open',
+        count: 'open'
+      }, {
+        label: 'Closed',
+        path: '/tickets/closed',
+        count: 'closed'
+      }, {
+        label: 'Due',
+        path: '/tickets/due',
+        count: 'due'
+      }
+    ];
+
+  }
   ngOnInit() {
-    this.service.getAllTickets().subscribe(data => {
-      this.allTickets = data.json();
-      console.log(this.allTickets);
-    });
-    this.service.getOpenTickets().subscribe(data => this.openTickets = data.json());
-    this.service.getClosedTickets().subscribe(data => this.closedTickets = data.json());
-    this.service.getDueTickets().subscribe(data => this.dueTickets = data.json());
-    this.service.getCount().subscribe(data => {this.numberOfTickets = data.json();
-      console.log(this.numberOfTickets);
-    });
+    this.service.getCount().subscribe(data => {this.numberOfTickets = data.json();});
   }
 
-  onClick(element) {
-    console.log(element.ticketId);
-    this.router.navigate(['/tickets/view', element.ticketId]);
-  }
-
+  // onSubmit() {
+  //   this.service.getByFilter(this.filterForm.value).subscribe(data => console.log(data));
+  // }
 }

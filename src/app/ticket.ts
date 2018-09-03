@@ -4,8 +4,8 @@ export interface Ticket {
   description: string;
   agentid: number;
   departmentid: number;
-  source: number;
-  priority: number;
+  source: string;
+  priority: string;
   status: number;
   sla: number;
   createdOn: Date;

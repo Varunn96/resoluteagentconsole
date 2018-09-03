@@ -17,8 +17,7 @@ export class NewTicketComponent implements OnInit {
     Description: ['']
   });
 
-
-   onSubmit() {
+  onSubmit() {
     this.service.addNewTicket(this.noteForm.value).subscribe(result=>this.route.navigate(["/tickets"]));
   }
 
